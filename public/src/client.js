@@ -1,6 +1,6 @@
 import * as THREE from '/build/three.module.js';
 import { OrbitControls } from '/jsm/controls/OrbitControls.js';
-// import { MapControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+// import { MapControls } from '/jsm/controls/OrbitControls.js';
 // Three.js
 var scene = undefined;
 var camera = undefined;
@@ -8,6 +8,8 @@ var renderer = undefined;
 var clock = undefined;
 
 var tmpTransformation = undefined;
+var controls = undefined;
+
 Ammo().then(AmmoStart);
 function AmmoStart() {
     tmpTransformation = new Ammo.btTransform();
@@ -51,6 +53,15 @@ function initGraphicsUniverse() {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // ---------------- CAMERA CONTROLS ----------------
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.maxPolarAngle = Math.PI / 2;
+    controls.minDistance = 2;
+    controls.maxDistance = 100;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
     document.body.appendChild(renderer.domElement);
     clock = new THREE.Clock();
 
@@ -123,6 +134,7 @@ function render() {
     let deltaTime = clock.getDelta();
     updatePhysicsUniverse(deltaTime);
 
+    controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
 }
