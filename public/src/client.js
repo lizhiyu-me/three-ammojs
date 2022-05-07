@@ -1,7 +1,6 @@
 import * as THREE from '/build/three.module.js';
 import { OrbitControls } from '/jsm/controls/OrbitControls.js';
 // import { MapControls } from '/jsm/controls/OrbitControls.js';
-// Three.js
 var scene = undefined;
 var camera = undefined;
 var renderer = undefined;
@@ -116,7 +115,7 @@ function updatePhysicsUniverse(deltaTime) {
     for (let i = 0; i < rigidBody_List.length; i++) {
         let Graphics_Obj = rigidBody_List[i];
         let Physics_Obj = Graphics_Obj.userData.physicsBody;
-        let tmpTransformation = new Ammo.btTransform();
+        // let tmpTransformation = new Ammo.btTransform();
 
         let motionState = Physics_Obj.getMotionState();
         if (motionState) {
